@@ -26,9 +26,7 @@
 }
 
 .product-rating,
-.product-price {
+.product-price,
+.product-description {
   font-size: 1.6rem;
-}
-
-.product-price {
 }

@@ -1,0 +1,34 @@
+.product-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+
+  box-shadow: 0 0 3px 1px gray;
+}
+
+.product-title {
+  font-size: 2rem;
+}
+
+.img-wrapper {
+  /* width: 20rem; */
+  height: 20rem;
+  display: flex;
+  justify-content: center;
+}
+
+.product-img {
+  height: 100%;
+  float: left;
+}
+
+.product-rating,
+.product-price {
+  font-size: 1.6rem;
+}
+
+.product-price {
+}

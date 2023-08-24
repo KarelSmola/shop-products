@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import Product from "./Product";
 
 import classes from "./ProductsList.module.css";
 
-const ProductsList = ({ products }) => {
-  const [curOpen, setCurOpen] = useState(null);
-
+const ProductsList = ({ products, onShowDetail }) => {
   return (
     <ul className={classes["products-list"]}>
       {products.map((product) => (
         <Product
+          product={product}
           key={product.id}
           id={product.id}
           title={product.title}
-          img={product.image}
-          rating={product.rating.rate}
+          img={product.thumbnail}
+          rating={product.rating}
           price={product.price}
           description={product.description}
-          curOpen={curOpen}
-          onOpen={setCurOpen}
+          onShowDetail={onShowDetail}
         />
       ))}
     </ul>

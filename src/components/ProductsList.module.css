@@ -1,6 +1,8 @@
 .products-list {
-  list-style: none;
+  grid-column: 1 / 2;
+  justify-self: center;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  list-style: none;
 }

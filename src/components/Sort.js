@@ -5,6 +5,7 @@ import classes from "./Sort.module.css";
 const Sort = ({ onSortBy, sort }) => {
   return (
     <select
+      className={classes["select-sort"]}
       onChange={(e) => {
         onSortBy(e.target.value);
       }}

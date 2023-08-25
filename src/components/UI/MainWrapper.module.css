@@ -5,6 +5,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr auto;
   gap: 1rem;
-  background-color: black;
+  background-color: #000;
   color: #fff;
+  border-radius: 1rem;
 }

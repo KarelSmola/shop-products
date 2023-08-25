@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Sort from "./components/Sort";
 import ProductsList from "./components/ProductsList";
 import ProductDetail from "./components/ProductDetail";
 import FavouritesList from "./components/FavouritesList";
+import { useSort } from "./hooks/useSort";
+import { useFetch } from "./hooks/useFetch";
+import { useFavourites } from "./hooks/useFavourites";
+import { useDetail } from "./hooks/useDetail";
 
 import MainWrapper from "./components/UI/MainWrapper";
 import FavouriteProductsStat from "./components/FavouriteProductsStat";
 
-// const url = "https://fakestoreapi.com/products";
-const url = "https://dummyjson.com/products";
-
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [sortBy, setSortBy] = useState("title");
-  const [showDetail, setShowDetail] = useState(false);
-  const [favouritesProducts, setFavouritesProducts] = useState([]);
+  const [products] = useFetch();
+  const [sortProducts, sortedProducts, sortBy] = useSort({ products });
+  const [toggleShowDetail, closeDetail, showDetail, setShowDetail] =
+    useDetail();
+
+  const [favouritesProducts, addToFavourites, removeFromFavourites] =
+    useFavourites({ setShowDetail });
+
+  const { id, title, image, brand, price, rating, description } = showDetail;
 
   const productsTotalPrice = favouritesProducts.length
     ? favouritesProducts.reduce((acc, cur) => acc + cur.price, 0)
@@ -26,74 +32,6 @@ const App = () => {
           favouritesProducts.length
       ).toFixed(2)
     : "0";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      setProducts(data.products);
-    };
-
-    fetchData();
-  }, []);
-
-  const sortProducts = (sortValue) => {
-    setSortBy(sortValue);
-  };
-
-  let sortedProducts;
-
-  if (sortBy === "title") sortedProducts = products;
-
-  if (sortBy === "price")
-    sortedProducts = products
-      .slice()
-      .sort(
-        (productA, productB) => Number(productA.price) - Number(productB.price)
-      );
-
-  if (sortBy === "rating")
-    sortedProducts = products
-      .slice()
-      .sort(
-        (productA, productB) =>
-          Number(productA.rating.rate) - Number(productB.rating.rate)
-      );
-
-  const toggleShowDetail = (product) => {
-    if (!showDetail) {
-      setShowDetail({
-        id: product.id,
-        title: product.title,
-        image: product.images[0],
-        brand: product.brand,
-        price: product.price,
-        rating: product.rating,
-        description: product.description,
-      });
-    } else {
-      closeDetail();
-    }
-  };
-
-  const { id, title, image, brand, price, rating, description } = showDetail;
-
-  const closeDetail = () => {
-    setShowDetail(false);
-  };
-
-  const addToFavourites = (favouriteProduct) => {
-    setFavouritesProducts((prev) => {
-      return [...prev, favouriteProduct];
-    });
-    setShowDetail(false);
-  };
-
-  const removeFromFavourites = (id) => {
-    setFavouritesProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== id)
-    );
-  };
 
   return (
     <MainWrapper>

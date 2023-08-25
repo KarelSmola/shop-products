@@ -5,6 +5,8 @@
   gap: 1rem;
   width: 90%;
   font-size: 1.6rem;
+  position: sticky;
+  top: 12rem;
 }
 
 .favourite-product {

@@ -5,11 +5,14 @@
   align-items: center;
   gap: 1rem;
   width: 90%;
+  height: 10rem;
   text-align: center;
   background-color: #333;
   border-radius: 1rem;
   padding: 1rem;
   margin-bottom: 1rem;
+  position: sticky;
+  top: 1rem;
 }
 
 .statistics-info {

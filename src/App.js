@@ -5,6 +5,7 @@ import ProductDetail from "./components/ProductDetail";
 import FavouritesList from "./components/FavouritesList";
 
 import MainWrapper from "./components/UI/MainWrapper";
+import FavouriteProductsStat from "./components/FavouriteProductsStat";
 
 // const url = "https://fakestoreapi.com/products";
 const url = "https://dummyjson.com/products";
@@ -14,6 +15,17 @@ const App = () => {
   const [sortBy, setSortBy] = useState("title");
   const [showDetail, setShowDetail] = useState(false);
   const [favouritesProducts, setFavouritesProducts] = useState([]);
+
+  const productsTotalPrice = favouritesProducts.length
+    ? favouritesProducts.reduce((acc, cur) => acc + cur.price, 0)
+    : "0";
+
+  const productsAverageRating = favouritesProducts.length
+    ? Number(
+        favouritesProducts.reduce((acc, cur) => acc + cur.rating, 0) /
+          favouritesProducts.length
+      ).toFixed(2)
+    : "0";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,10 +118,16 @@ const App = () => {
           selectedId={showDetail.id}
         />
       )}
-      <FavouritesList
-        favouritesProducts={favouritesProducts}
-        onRemoveFromFavourites={removeFromFavourites}
-      />
+      <div>
+        <FavouriteProductsStat
+          productsTotalPrice={productsTotalPrice}
+          productsAverageRating={productsAverageRating}
+        />
+        <FavouritesList
+          favouritesProducts={favouritesProducts}
+          onRemoveFromFavourites={removeFromFavourites}
+        />
+      </div>
     </MainWrapper>
   );
 };

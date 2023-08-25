@@ -1,0 +1,30 @@
+.favourite-products-list {
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 90%;
+  font-size: 1.6rem;
+}
+
+.favourite-product {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: #333;
+}
+
+.favourite-product-info {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.remove-btn {
+  background-color: transparent;
+}
+
+.remove-btn:hover {
+  background-color: #560a0a;
+}

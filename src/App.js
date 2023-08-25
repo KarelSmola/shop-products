@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sort from "./components/Sort";
 import ProductsList from "./components/ProductsList";
 import ProductDetail from "./components/ProductDetail";
+import FavouritesList from "./components/FavouritesList";
 
 import MainWrapper from "./components/UI/MainWrapper";
 
@@ -12,6 +13,7 @@ const App = () => {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState("title");
   const [showDetail, setShowDetail] = useState(false);
+  const [favouritesProducts, setFavouritesProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,22 +48,39 @@ const App = () => {
           Number(productA.rating.rate) - Number(productB.rating.rate)
       );
 
-  const showDetailProduct = (product) => {
-    console.log(product);
-    setShowDetail({
-      title: product.title,
-      image: product.images[0],
-      brand: product.brand,
-      price: product.price,
-      rating: product.rating,
-      description: product.description,
-    });
+  const toggleShowDetail = (product) => {
+    if (!showDetail) {
+      setShowDetail({
+        id: product.id,
+        title: product.title,
+        image: product.images[0],
+        brand: product.brand,
+        price: product.price,
+        rating: product.rating,
+        description: product.description,
+      });
+    } else {
+      closeDetail();
+    }
   };
 
-  const { title, image, brand, price, rating, description } = showDetail;
+  const { id, title, image, brand, price, rating, description } = showDetail;
 
   const closeDetail = () => {
     setShowDetail(false);
+  };
+
+  const addToFavourites = (favouriteProduct) => {
+    setFavouritesProducts((prev) => {
+      return [...prev, favouriteProduct];
+    });
+    setShowDetail(false);
+  };
+
+  const removeFromFavourites = (id) => {
+    setFavouritesProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
   };
 
   return (
@@ -69,10 +88,12 @@ const App = () => {
       <Sort onSortBy={sortProducts} sort={sortBy} />
       <ProductsList
         products={sortedProducts}
-        onShowDetail={showDetailProduct}
+        onToggleShowDetail={toggleShowDetail}
+        selectedProduct={showDetail}
       />
       {showDetail && (
         <ProductDetail
+          id={id}
           title={title}
           image={image}
           brand={brand}
@@ -80,8 +101,15 @@ const App = () => {
           rating={rating}
           description={description}
           onCloseDetail={closeDetail}
+          onAddToFavourites={addToFavourites}
+          favourites={favouritesProducts}
+          selectedId={showDetail.id}
         />
       )}
+      <FavouritesList
+        favouritesProducts={favouritesProducts}
+        onRemoveFromFavourites={removeFromFavourites}
+      />
     </MainWrapper>
   );
 };

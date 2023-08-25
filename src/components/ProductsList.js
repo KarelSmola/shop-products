@@ -3,7 +3,7 @@ import Product from "./Product";
 
 import classes from "./ProductsList.module.css";
 
-const ProductsList = ({ products, onShowDetail }) => {
+const ProductsList = ({ products, onToggleShowDetail, selectedProduct }) => {
   return (
     <ul className={classes["products-list"]}>
       {products.map((product) => (
@@ -16,7 +16,8 @@ const ProductsList = ({ products, onShowDetail }) => {
           rating={product.rating}
           price={product.price}
           description={product.description}
-          onShowDetail={onShowDetail}
+          onToggleShowDetail={onToggleShowDetail}
+          selectedProduct={selectedProduct}
         />
       ))}
     </ul>

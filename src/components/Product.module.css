@@ -11,6 +11,11 @@
   height: 40rem;
 }
 
+.selected-product {
+  background-color: #ccc;
+  color: #000;
+}
+
 .product-title {
   font-size: 2rem;
 }
